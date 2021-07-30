@@ -1,21 +1,16 @@
 #!/usr/bin/python3
 import sys
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfFileMerger, PdfFileWriter
 
 def concat_pdf(file1, file2, outfile):
     # Concatenate files
-    pdf_writer = PdfFileWriter()
-    pdf_reader_1 = PdfFileReader(file1)
-    pdf_reader_2 = PdfFileReader(file2)
+    pdf_merger = PdfFileMerger()
 
-    for i in range(0, pdf_reader_1.numPages):
-        pdf_writer.addPage(pdf_reader_1.getPage(i))
-        
-    for i in range(0, pdf_reader_2.numPages):
-        pdf_writer.addPage(pdf_reader_2.getPage(i))
+    pdf_merger.append(file1)
+    pdf_merger.append(file2)
 
     with open(outfile, 'wb') as f:
-        pdf_writer.write(f)
+        pdf_merger.write(f)
 
 
 if __name__ == "__main__":
